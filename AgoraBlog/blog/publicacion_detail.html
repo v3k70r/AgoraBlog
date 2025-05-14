@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ publicacion.titulo }}{% endblock %}
+
+{% block content %}
+  <h1>{{ publicacion.titulo }}</h1>
+  <p class="text-muted">Escrito por {{ publicacion.autor.username }} el {{ publicacion.fecha_publicacion|date:"d M Y H:i" }}</p>
+
+  {% if publicacion.imagen %}
+    <img src="{{ publicacion.imagen.url }}" class="img-fluid mb-3" alt="Imagen de la publicación">
+  {% endif %}
+
+  <div class="mb-4">
+    {{ publicacion.contenido|linebreaks }}
+  </div>
+
+  {% if user == publicacion.autor %}
+    <a href="{% url 'publicacion_update' publicacion.pk %}" class="btn btn-secondary">Editar</a>
+    <a href="{% url 'publicacion_delete' publicacion.pk %}" class="btn btn-danger">Eliminar</a>
+  {% endif %}
+  <a href="{% url 'publicacion_list' %}" class="btn btn-link">Volver</a>
+{% endblock %}

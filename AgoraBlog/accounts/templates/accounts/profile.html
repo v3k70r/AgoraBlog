@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="card" style="width: 18rem;">
+    {% if user.profile.avatar%}
+  <img src="{{ user.profile.avatar.url }}" class="card-img-top" alt="...">
+    {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }} / {{ user.username }}</h5>
+    <p class="card-text"><b>Descripción: </b>{{ user.profile.bio }}</p>
+    <p class="card-text"><b>Correo electrónico:</b> {{ user.email }}</p>
+    <p class="card-text"><b>Fecha de nacimiento:</b> {{ user.profile.birth_date }}</p>
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Editar perfil</a>
+  </div>
+</div>
+{% endblock %}
