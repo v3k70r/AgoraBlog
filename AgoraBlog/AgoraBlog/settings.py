@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'blog'
+    'blog',
+    'oraculo',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'  # por ejemplo, para Chile
 
 USE_I18N = True
 
@@ -125,11 +127,26 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Archivos subidos por usuarios (avatares, imágenes de publicaciones, etc.)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Aquí se guardarán los archivos
+
+# Archivos estáticos recolectados (admin, CSS, JS, etc.)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Archivos propios del proyecto
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # Donde Django copiará los archivos estáticos recolectados
+
 
 
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'victor.a.albarran.n@gmail.com'
+EMAIL_HOST_PASSWORD = '0dh04h13h63h'

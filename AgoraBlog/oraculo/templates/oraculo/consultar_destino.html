@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a class="btn btn-primary" href="{% url 'historial_consultas' %}">Mis consultas</a>
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Consulta al I Ching</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Consultar destino</button>
+  </form>
+
+  {% if resultado %}
+  <div class="card mt-4">
+    <div class="card-body">
+      <h5 class="card-title">Tu pregunta:</h5>
+      <p class="card-text"><em>{{ resultado.pregunta }}</em></p>
+
+      <hr>
+
+      <h5 class="card-title">Hexagrama {{ resultado.hexagrama.numero }}: {{ resultado.hexagrama.nombre }} ({{ resultado.hexagrama.nombre_chino }})</h5>
+      <p><strong>Significado:</strong> {{ resultado.hexagrama.significado }}</p>
+      <p><strong>Recomendación:</strong> {{ resultado.hexagrama.recomendacion }}</p>
+
+      {% if resultado.hexagrama.monedas %}
+      <hr>
+      <p><strong>Combinación de monedas:</strong></p>
+      <ul>
+        {% for linea in resultado.hexagrama.monedas %}
+          <li>{{ linea|title }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

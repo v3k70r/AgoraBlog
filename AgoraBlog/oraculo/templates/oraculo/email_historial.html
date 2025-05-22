@@ -1,0 +1,31 @@
+<h2>Historial de Consultas</h2>
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Pregunta</th>
+            <th>Hexagrama</th>
+            <th>Nombre</th>
+            <th>Nombre Chino</th>
+            <th>Significado</th>
+            <th>Recomendación</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <td>{{ consulta.fecha|date:"Y-m-d H:i" }}</td>
+            <td>{{ consulta.pregunta }}</td>
+            <td>{{ consulta.hexagrama.numero }}</td>
+            <td>{{ consulta.hexagrama.nombre }}</td>
+            <td>{{ consulta.hexagrama.nombre_chino }}</td>
+            <td>{{ consulta.hexagrama.significado }}</td>
+            <td>{{ consulta.hexagrama.recomendacion }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No has realizado consultas aún.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

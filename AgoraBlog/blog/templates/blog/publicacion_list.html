@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Publicaciones{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Publicaciones</h1>
+    <a href="{% url 'publicacion_create' %}" class="btn btn-primary">Nueva publicación</a>
+  </div>
+  <div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      {% for publicacion in publicaciones %}
+        <div class="card mb-4">
+          {% if publicacion.imagen %}
+            <img src="{{ publicacion.imagen.url }}" class="card-img-top img-fluid" alt="Imagen de la publicación" style="max-height: 300px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'publicacion_detail' publicacion.pk %}">
+                {{ publicacion.titulo }}
+              </a>
+            </h5>
+            <p class="card-text">
+              {{ publicacion.contenido|truncatechars:150 }}
+            </p>
+            <small class="text-muted">
+              Por {{ publicacion.autor.username }} - {{ publicacion.fecha_publicacion|date:"d M Y H:i" }}
+            </small>
+          </div>
+        </div>
+      {% empty %}
+        <p>No hay publicaciones aún.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
